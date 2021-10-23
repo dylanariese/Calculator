@@ -21,8 +21,8 @@ namespace Calculator.Api
         {
             services.AddControllers();
 
-            //add services
-            services.AddCalculation();
+            //register services used for calculation
+            services.AddCalculationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
