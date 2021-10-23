@@ -17,8 +17,8 @@ namespace Calculator.Api.Extensions
 
             //auto register all calculators that implement ICalculation
             Assembly.GetAssembly(typeof(CompanyCarCalculation)).GetTypes()
-                .Where(type => type.GetInterfaces().Contains(typeof(ICalculation))).ToList()
-                .ForEach(type => services.AddTransient(typeof(ICalculation), type));
+                    .Where(type => type.GetInterfaces().Contains(typeof(ICalculation))).ToList()
+                    .ForEach(type => services.AddTransient(typeof(ICalculation), type));
         }
     }
 }

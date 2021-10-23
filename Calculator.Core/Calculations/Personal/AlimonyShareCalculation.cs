@@ -16,6 +16,6 @@ namespace Calculator.Core.Calculations.Personal
 
         //Added just to test AlimonyTotalCalculation
         public async Task CalculateAsync(CalculationCollection values) =>
-            shared.Collection.TryAdd(Keys.AlimonyShare, 5000);
+            shared.Collection.TryAdd(Keys.AlimonyShare, 1000);
     }
 }

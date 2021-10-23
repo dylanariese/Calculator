@@ -39,7 +39,7 @@ namespace Calculator.Core.Calculations.Company
             }
 
             //todo: get correct value from database
-            var companyCar = await Task.FromResult(new CompanyCar { Deduction = 0 });
+            var companyCar = await Task.FromResult(new CompanyCar { Deduction = 2500 });
 
             var value = companyCar.Deduction / 100 * ownCompany.NewValue.Amount;
 
