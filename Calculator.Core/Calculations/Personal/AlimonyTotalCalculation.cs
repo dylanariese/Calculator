@@ -28,6 +28,8 @@ namespace Calculator.Core.Calculations.Personal
 
                 return Math.Ceiling(alimonySubTotal * (alimonyShare / 100));
             });
+
+            shared.Collection.TryAdd(Keys.AlimonyTotal, value);
         }
     }
 }
