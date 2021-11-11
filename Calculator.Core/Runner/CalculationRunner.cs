@@ -1,5 +1,4 @@
-﻿using Calculator.Models;
-using Calculator.Models.Interfaces;
+﻿using Calculator.Models.Interfaces;
 using Calculator.Models.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,35 +10,35 @@ namespace Calculator.Core.Runner
     {
         private readonly ISharedCollection shared;
         private readonly IEnumerable<ICalculation> standalones;
-        private readonly IEnumerable<ICalculation> dependants;
+        private readonly IEnumerable<ICalculation> dependents;
 
         public CalculationRunner(ISharedCollection shared, IEnumerable<ICalculation> calculators)
         {
             this.shared = shared;
 
-            standalones = calculators.Where(x => x.GetType().GetInterface(nameof(IStandaloneCalculation)) != null);
-            dependants = calculators.Where(x => x.GetType().GetInterface(nameof(IDependantCalculation)) != null);
+            standalones = calculators.Where(calculator => calculator.GetType().GetInterface(nameof(IStandaloneCalculation)) != null);
+            dependents = calculators.Where(calculator => calculator.GetType().GetInterface(nameof(IDependentCalculation)) != null);
         }
 
         public async Task<Dictionary<string, decimal>> RunAsync(CalculationCollection values)
         {
             await Task.WhenAll(standalones.Select(calculation => calculation.CalculateAsync(values)));
-            await Task.WhenAll(dependants.Select(calculation => DependantHandler(calculation, values)));
+            await Task.WhenAll(dependents.Select(calculation => DependentHandler(calculation, values)));
 
             return shared.Collection.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
-        private Task DependantHandler(ICalculation calculation, CalculationCollection values)
+        private Task DependentHandler(ICalculation calculation, CalculationCollection values)
         {
             var done = false;
-            var dependant = calculation as IDependantCalculation;
+            var dependent = calculation as IDependentCalculation;
 
             while (!done)
             {
-                done = dependant.Predicate(values);                
+                done = dependent.Predicate(values);
             }
 
-            return dependant.CalculateAsync(values);
+            return dependent.CalculateAsync(values);
         }
     }
 }

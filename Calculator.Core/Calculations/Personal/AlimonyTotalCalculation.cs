@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Core.Calculations.Personal
 {
-    public class AlimonyTotalCalculation : IDependantCalculation, ICalculation
+    public class AlimonyTotalCalculation : IDependentCalculation, ICalculation
     {
         private readonly ISharedCollection shared;
 
